@@ -15,15 +15,16 @@ import ReactNative, {
     TouchableOpacity
 } from 'react-native';
 
-var SplashPage = require('./components/SplashPage');
-var LoginPage = require('./components/LoginPage');
-var SignupPage = require('./components/SignupPage');
-var MainPage = require('./components/MainPage');
-var PersonPage = require('./components/PersonPage');
-var NoNavigatorPage = require('./components/NoNavigatorPage');
+var SplashPage = require('./pages/SplashPage');
+var LoginPage = require('./pages/LoginPage');
+var SignupPage = require('./pages/SignupPage');
+var MainPage = require('./pages/MainPage');
+var PersonPage = require('./pages/PersonPage');
+var NoNavigatorPage = require('./pages/NoNavigatorPage');
 
 const styles = require('./styles.js');
 
+const firebase = require('firebase');
 const firebaseConfig = {
     apiKey: "AIzaSyDqk1DhYw2PfDVpU9NPPf5BZrCWHJ2lVIo",
     authDomain: "youfie-983ce.firebaseapp.com",
