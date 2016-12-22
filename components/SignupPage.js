@@ -4,6 +4,7 @@ var ReactNative = require('react-native');
 var {
   StyleSheet,
   View,
+  Image,
   Text,
   TextInput,
   Navigator,
@@ -30,6 +31,7 @@ class SignupPage extends Component {
     return (
       <Navigator
           renderScene={this.renderScene.bind(this)}
+          navigator={this.props.navigator}
           navigationBar={
             <Navigator.NavigationBar style={styles.navigationBar}
                 routeMapper={NavigationBarRouteMapper} />
@@ -43,11 +45,11 @@ class SignupPage extends Component {
             <View style={{flex:2, alignItems: 'center', justifyContent: 'center'}}>
                 <Text style={styles.youfieLogo}>youfie</Text>
             </View>
-            <View style={{flex:2, justifyContent: 'flex-start'}}>
+            <View style={{flex:3, justifyContent: 'flex-start'}}>
                 <View style={{ alignItems: 'center', justifyContent: 'space-between'}}>
 
                     <TextInput
-                        style={{borderColor: 'rgba(96,96,96,0.3)', marginBottom: 5, borderWidth: 1, borderStyle: 'dashed',  alignSelf: 'stretch', textAlign: 'center', height: 50,width: 300, color: 'rgba(0,0,0,0.5)'}}
+                        style={{backgroundColor: 'rgba(255,255,255,0.6)',borderColor: 'rgba(96,96,96,0.5)', marginBottom: 5, borderWidth: 1, borderStyle: 'dashed',  alignSelf: 'stretch', textAlign: 'center', height: 50,width: 300, color: 'rgba(96,96,96,0.8)'}}
                         autoCapitalize='none'
                         autoCorrect={false}
                         blurOnSubmit={true}
@@ -58,7 +60,7 @@ class SignupPage extends Component {
                         value={this.state.email}/>
 
                     <TextInput
-                        style={{borderColor: 'rgba(96,96,96,0.3)', marginBottom: 5, borderWidth: 1, borderStyle: 'dashed',  alignSelf: 'stretch', textAlign: 'center', height: 50, width: 300, color: 'rgba(0,0,0,0.5)'}}
+                        style={{backgroundColor: 'rgba(255,255,255,0.6)', borderColor: 'rgba(96,96,96,0.5)', marginBottom: 5, borderWidth: 1, borderStyle: 'dashed',  alignSelf: 'stretch', textAlign: 'center', height: 50, width: 300, color: 'rgba(96,96,96,0.8)'}}
                         autoCapitalize={'none'}
                         secureTextEntry={this.state.passwordTextHidden}
                         autoCorrect={false}
@@ -70,7 +72,7 @@ class SignupPage extends Component {
                         value={this.state.password}/>
 
                     <TextInput
-                        style={{borderColor: 'rgba(96,96,96,0.3)', marginBottom: 20, borderWidth: 1,borderStyle: 'dashed',  alignSelf: 'stretch', textAlign: 'center', height: 50, width: 300, color: 'rgba(0,0,0,0.5)'}}
+                        style={{backgroundColor: 'rgba(255,255,255,0.6)', borderColor: 'rgba(96,96,96,0.5)', marginBottom: 20, borderWidth: 1,borderStyle: 'dashed',  alignSelf: 'stretch', textAlign: 'center', height: 50, width: 300, color: 'rgba(96,96,96,0.8)'}}
                         autoCapitalize={'none'}
                         secureTextEntry={this.state.confirmPasswordTextHidden}
                         autoCorrect={false}
@@ -98,8 +100,12 @@ class SignupPage extends Component {
 var NavigationBarRouteMapper = {
   LeftButton(route, navigator, index, navState) {
       return(
-          <TouchableOpacity style={{flex: 1, justifyContent: 'center'}}>
-              <Text style={{color: 'white', margin: 10, fontSize: 16}}>back</Text>
+          <TouchableOpacity style={{flex: 1, justifyContent: 'center'}}
+            onPress={() => navigator.parentNavigator.pop()}>
+              <Image
+                source={require('../assets/backarrow-youfie-logo.png')}
+                style={{width: 20, height: 20, marginLeft: 10, marginTop: 3}}
+              />
           </TouchableOpacity>
       )
   },

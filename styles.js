@@ -10,7 +10,7 @@ var styles = StyleSheet.create({
         alignItems: 'center',
     },
     youfieLogo: {
-        color: 'white',
+        color: 'rgba(255,255,255,1)',
         fontSize: 88,
         fontFamily: 'Avenir Light'
     },

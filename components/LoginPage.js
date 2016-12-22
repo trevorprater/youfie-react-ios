@@ -36,10 +36,10 @@ class LoginPage extends Component {
             <View style={{flex:2, alignItems: 'center', justifyContent: 'center'}}>
                 <Text style={styles.youfieLogo}>youfie</Text>
             </View>
-            <View style={{flex:1, justifyContent: 'flex-start'}}>
+            <View style={{flex:2, justifyContent: 'flex-start'}}>
                 <View style={{ alignItems: 'center', justifyContent: 'space-between'}}>
                     <TextInput
-                        style={{borderColor: 'rgba(96,96,96,0.3)', marginBottom: 5, borderWidth: 1,borderStyle: 'dashed',  alignSelf: 'stretch', textAlign: 'center', height: 50,width: 300, color: 'rgba(0,0,0,0.5)'}}
+                        style={{backgroundColor: 'rgba(255,255,255,0.6)', borderColor: 'rgba(96,96,96,0.5)', marginBottom: 5, borderWidth: 1,borderStyle: 'dashed',  alignSelf: 'stretch', textAlign: 'center', height: 50,width: 300, color: 'rgba(96,96,96,0.8)'}}
                         autoCapitalize='none'
                         autoCorrect={false}
                         blurOnSubmit={true}
@@ -49,7 +49,7 @@ class LoginPage extends Component {
                         onChangeText={(text) => this.setState({email: text})}
                         value={this.state.email}/>
                     <TextInput
-                        style={{borderColor: 'rgba(96,96,96,0.3)', marginBottom: 20, borderWidth: 1,borderStyle: 'dashed',  alignSelf: 'stretch', textAlign: 'center', height: 50,width: 300, color: 'rgba(0,0,0,0.5)'}}
+                        style={{backgroundColor: 'rgba(255,255,255,0.6)', borderColor: 'rgba(96,96,96,0.5)', marginBottom: 20, borderWidth: 1,borderStyle: 'dashed',  alignSelf: 'stretch', textAlign: 'center', height: 50,width: 300, color: 'rgba(96,96,96,0.8)'}}
                         autoCapitalize={'none'}
                         secureTextEntry={this.state.textHidden}
                         autoCorrect={false}
@@ -81,7 +81,7 @@ class LoginPage extends Component {
     gotoSignup() {
         this.props.navigator.push({
            id: 'SignupPage',
-           sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
+           sceneConfig: Navigator.SceneConfigs.HorizontalSwipeJump
         });
     }
 
