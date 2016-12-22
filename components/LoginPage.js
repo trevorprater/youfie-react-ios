@@ -12,14 +12,13 @@ var {
 } = ReactNative;
 var React = require('react');
 var {Component} = React;
-
 const styles = require('../styles.js');
 
 class LoginPage extends Component {
-  constructor(props) {
-      super(props);
+  componentWillMount() {
       this.state = { email: 'email', password: 'password', textHidden: false};
   }
+
   render() {
     return (
       <Navigator
@@ -70,7 +69,7 @@ class LoginPage extends Component {
 
         <View style={{flex: 1, flexDirection: 'row', alignItems: 'flex-start'}}>
             <Text style={{color: 'rgba(96,96,96,1)', fontSize: 16, marginRight: 6}}>no account?</Text>
-            <TouchableHighlight onPress={this.gotoNext.bind(this)}>
+            <TouchableHighlight onPress={this.gotoSignup.bind(this)}>
                 <Text style={{color: 'rgb(255,255,255)', fontSize: 16}}>sign up</Text>
             </TouchableHighlight>
         </View>
@@ -78,12 +77,20 @@ class LoginPage extends Component {
       </View>
     );
   }
-  gotoNext() {
-    this.props.navigator.push({
-      id: 'MainPage',
-      name: 'homepage',
-    });
-  }
+
+    gotoSignup() {
+        this.props.navigator.push({
+           id: 'SignupPage',
+           sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
+        });
+    }
+
+    gotoNext() {
+        this.props.navigator.push({
+            id: 'MainPage',
+           sceneConfig: Navigator.SceneConfigs.HorizontalSwipeJump
+        });
+    }
 }
 
 var NavigationBarRouteMapper = {
@@ -94,13 +101,7 @@ var NavigationBarRouteMapper = {
     return null;
   },
   Title(route, navigator, index, navState) {
-    return null; //(
-      //<TouchableOpacity style={{flex: 1, justifyContent: 'center'}}>
-       // <Text style={{color: 'white', margin: 10, fontSize: 16}}>
-       //   login
-       // </Text>
-      //</TouchableOpacity>
-    //);
+    return null;
   }
 };
 

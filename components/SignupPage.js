@@ -15,17 +15,17 @@ var {Component} = React;
 
 const styles = require('../styles.js');
 
-class LoginPage extends Component {
-  constructor(props) {
-      super(props);
+class SignupPage extends Component {
+  componentWillMount() {
       this.state = {
-          email: 'email',
-          password: 'password',
-          confirmPassword: 'confirm password',
-          passwordTextHidden: false,
-          confirmPasswordTextHidden: false
+        email: 'email',
+        password: 'password',
+        confirmPassword: 'confirm password',
+        passwordTextHidden: false,
+        confirmPasswordTextHidden: false
       };
   }
+
   render() {
     return (
       <Navigator
@@ -82,7 +82,7 @@ class LoginPage extends Component {
                         value={this.state.confirmPassword}/>
                 </View>
                 <View style={{ alignItems: 'center'}}>
-                    <TouchableHighlight onPress={this.gotoNext.bind(this)}>
+                    <TouchableHighlight onPress={this.gotoLogin.bind(this)}>
                         <Text style={{color: 'rgb(255,255,255)', marginBottom: 15, fontSize: 20}}>create account</Text>
                     </TouchableHighlight>
                 </View>
@@ -90,11 +90,8 @@ class LoginPage extends Component {
       </View>
     );
   }
-  gotoNext() {
-    this.props.navigator.push({
-      id: 'MainPage',
-      name: 'homepage',
-    });
+  gotoLogin() {
+    this.props.navigator.pop()
   }
 }
 
@@ -110,14 +107,8 @@ var NavigationBarRouteMapper = {
     return null;
   },
   Title(route, navigator, index, navState) {
-    return null; //(
-      //<TouchableOpacity style={{flex: 1, justifyContent: 'center'}}>
-       // <Text style={{color: 'white', margin: 10, fontSize: 16}}>
-       //   login
-       // </Text>
-      //</TouchableOpacity>
-    //);
+    return null;
   }
 };
 
-module.exports = LoginPage;
+module.exports = SignupPage;
