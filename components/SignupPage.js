@@ -18,7 +18,13 @@ const styles = require('../styles.js');
 class LoginPage extends Component {
   constructor(props) {
       super(props);
-      this.state = { email: 'email', password: 'password', textHidden: false};
+      this.state = {
+          email: 'email',
+          password: 'password',
+          confirmPassword: 'cofirmPassword',
+          passwordTextHidden: false,
+          confirmPasswordTextHidden: false
+      };
   }
   render() {
     return (
@@ -39,8 +45,9 @@ class LoginPage extends Component {
             </View>
             <View style={{flex:1, justifyContent: 'flex-start'}}>
                 <View style={{ alignItems: 'center', justifyContent: 'space-between'}}>
+
                     <TextInput
-                        style={{borderColor: 'rgba(96,96,96,0.3)', marginBottom: 5, borderWidth: 1,borderStyle: 'dashed',  alignSelf: 'stretch', textAlign: 'center', height: 50,width: 300, color: 'rgba(0,0,0,0.5)'}}
+                        style={{borderColor: 'rgba(96,96,96,0.3)', marginBottom: 5, borderWidth: 1, borderStyle: 'dashed',  alignSelf: 'stretch', textAlign: 'center', height: 50,width: 300, color: 'rgba(0,0,0,0.5)'}}
                         autoCapitalize='none'
                         autoCorrect={false}
                         blurOnSubmit={true}
@@ -49,32 +56,37 @@ class LoginPage extends Component {
                         onFocus={() => this.setState({email: ''})}
                         onChangeText={(text) => this.setState({email: text})}
                         value={this.state.email}/>
+
                     <TextInput
-                        style={{borderColor: 'rgba(96,96,96,0.3)', marginBottom: 20, borderWidth: 1,borderStyle: 'dashed',  alignSelf: 'stretch', textAlign: 'center', height: 50,width: 300, color: 'rgba(0,0,0,0.5)'}}
+                        style={{borderColor: 'rgba(96,96,96,0.3)', marginBottom: 5, borderWidth: 1, borderStyle: 'dashed',  alignSelf: 'stretch', textAlign: 'center', height: 50, width: 300, color: 'rgba(0,0,0,0.5)'}}
                         autoCapitalize={'none'}
-                        secureTextEntry={this.state.textHidden}
+                        secureTextEntry={this.state.passwordTextHidden}
                         autoCorrect={false}
                         blurOnSubmit={true}
                         keyboardType={'default'}
                         maxLength={50}
-                        onFocus={() => this.setState({password: '', textHidden: true})}
+                        onFocus={() => this.setState({password: '', passwordTextHidden: true})}
                         onChangeText={(text) => this.setState({password: text})}
                         value={this.state.password}/>
+
+                    <TextInput
+                        style={{borderColor: 'rgba(96,96,96,0.3)', marginBottom: 20, borderWidth: 1,borderStyle: 'dashed',  alignSelf: 'stretch', textAlign: 'center', height: 50, width: 300, color: 'rgba(0,0,0,0.5)'}}
+                        autoCapitalize={'none'}
+                        secureTextEntry={this.state.confirmPasswordTextHidden}
+                        autoCorrect={false}
+                        blurOnSubmit={true}
+                        keyboardType={'default'}
+                        maxLength={50}
+                        onFocus={() => this.setState({confirmPassword: '', passwordTextHidden: true})}
+                        onChangeText={(text) => this.setState({confirmPassword: text})}
+                        value={this.state.confirmPassword}/>
                 </View>
                 <View style={{ alignItems: 'center'}}>
                     <TouchableHighlight onPress={this.gotoNext.bind(this)}>
-                        <Text style={{color: 'rgb(255,255,255)', marginBottom: 15, fontSize: 20}}>login</Text>
+                        <Text style={{color: 'rgb(255,255,255)', marginBottom: 15, fontSize: 20}}>create account</Text>
                     </TouchableHighlight>
                 </View>
             </View>
-
-        <View style={{flex: 1, flexDirection: 'row', alignItems: 'flex-start'}}>
-            <Text style={{color: 'rgba(96,96,96,1)', fontSize: 16, marginRight: 6}}>no account?</Text>
-            <TouchableHighlight onPress={this.gotoNext.bind(this)}>
-                <Text style={{color: 'rgb(255,255,255)', fontSize: 16}}>sign up</Text>
-            </TouchableHighlight>
-        </View>
-
       </View>
     );
   }
@@ -87,8 +99,10 @@ class LoginPage extends Component {
 }
 
 var NavigationBarRouteMapper = {
-  LeftButton(route, navigator, index, navState) {
-    return null;
+  return ( LeftButton(route, navigator, index, navState) {
+    <TouchableOpacity style={{flex: 1, justifyContent: 'center'}}>
+        <Text style={{color: 'white', margin: 10, fontSize: 16}}> <- login</Text>
+    </TouchableOpacity>)
   },
   RightButton(route, navigator, index, navState) {
     return null;
