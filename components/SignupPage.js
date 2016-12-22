@@ -21,7 +21,7 @@ class LoginPage extends Component {
       this.state = {
           email: 'email',
           password: 'password',
-          confirmPassword: 'cofirmPassword',
+          confirmPassword: 'confirm password',
           passwordTextHidden: false,
           confirmPasswordTextHidden: false
       };
@@ -43,7 +43,7 @@ class LoginPage extends Component {
             <View style={{flex:2, alignItems: 'center', justifyContent: 'center'}}>
                 <Text style={styles.youfieLogo}>youfie</Text>
             </View>
-            <View style={{flex:1, justifyContent: 'flex-start'}}>
+            <View style={{flex:2, justifyContent: 'flex-start'}}>
                 <View style={{ alignItems: 'center', justifyContent: 'space-between'}}>
 
                     <TextInput
@@ -77,7 +77,7 @@ class LoginPage extends Component {
                         blurOnSubmit={true}
                         keyboardType={'default'}
                         maxLength={50}
-                        onFocus={() => this.setState({confirmPassword: '', passwordTextHidden: true})}
+                        onFocus={() => this.setState({confirmPassword: '', confirmPasswordTextHidden: true})}
                         onChangeText={(text) => this.setState({confirmPassword: text})}
                         value={this.state.confirmPassword}/>
                 </View>
@@ -99,10 +99,12 @@ class LoginPage extends Component {
 }
 
 var NavigationBarRouteMapper = {
-  return ( LeftButton(route, navigator, index, navState) {
-    <TouchableOpacity style={{flex: 1, justifyContent: 'center'}}>
-        <Text style={{color: 'white', margin: 10, fontSize: 16}}> <- login</Text>
-    </TouchableOpacity>)
+  LeftButton(route, navigator, index, navState) {
+      return(
+          <TouchableOpacity style={{flex: 1, justifyContent: 'center'}}>
+              <Text style={{color: 'white', margin: 10, fontSize: 16}}>back</Text>
+          </TouchableOpacity>
+      )
   },
   RightButton(route, navigator, index, navState) {
     return null;
