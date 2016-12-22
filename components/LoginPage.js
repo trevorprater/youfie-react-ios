@@ -68,9 +68,9 @@ class LoginPage extends Component {
             </View>
 
         <View style={{flex: 1, flexDirection: 'row', alignItems: 'flex-start'}}>
-            <Text style={{color: 'rgba(96,96,96,1)', fontSize: 16, marginRight: 6}}>no account?</Text>
+            <Text style={{color: 'rgba(96,96,96,1)', fontSize: 19, marginRight: 6}}>no account?</Text>
             <TouchableHighlight onPress={this.gotoSignup.bind(this)}>
-                <Text style={{color: 'rgb(255,255,255)', fontSize: 16}}>sign up</Text>
+                <Text style={{color: 'rgb(255,255,255)', fontSize: 19}}>sign up</Text>
             </TouchableHighlight>
         </View>
 
