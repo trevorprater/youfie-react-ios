@@ -10,6 +10,7 @@ import ReactNative, {
     AppRegistry,
     StyleSheet,
     Text,
+    ListView,
     View,
     Navigator,
     TouchableOpacity
@@ -34,71 +35,98 @@ const firebaseConfig = {
 const firebaseApp = firebase.initializeApp(firebaseConfig)
 
 class Youfie extends Component {
-  render() {
-    return (
-      <Navigator
-          initialRoute={{id: 'SplashPage', name: 'Index'}}
-          renderScene={this.renderScene.bind(this)}
-          configureScene={(route) => {
-            if (route.sceneConfig) {
-              return route.sceneConfig;
-            }
-            return Navigator.SceneConfigs.FloatFromRight;
-          }} />
-    );
-  }
-  renderScene(route, navigator) {
-    var routeId = route.id;
-    if (routeId === 'SplashPage') {
-      return (
-        <SplashPage
-          navigator={navigator} />
-      );
+    constructor(props) {
+        super(props);
+        this.state = {
+            dataSource: new ListView.DataSource({
+                rowHasChanged: (row1, row2) => row1 !== row2,
+            })
+        };
+        this.photosRef = this.getRef().child('items');
     }
-    if (routeId === 'LoginPage') {
-      return (
-        <LoginPage
-          navigator={navigator} />
-      );
+
+    getRef() {
+        return firebaseApp.database().ref();
     }
-    if (routeId === 'SignupPage') {
-        navigator.pop()
+
+    listenForPhotos(photosRef) {
+        photosRef.on('value', (snap) => {
+            //get children as an array
+            var photos=[];
+            snap.forEach((child) => {
+                photos.push({
+                    title: child.val().title,
+                    _key: child.ey
+                });
+            });
+
+            this.setState({
+                dataSource: this.state.dataSource.cloneWithRows(photos)
+            });
+        });
+    }
+
+    componentDidMount() {
+        this.listenForPhotos(this.photosRef);
+    }
+
+
+
+    render() {
         return (
-        <SignupPage
-            navigator={navigator} />
+            <Navigator
+            initialRoute={{id: 'SplashPage', name: 'Index'}}
+            renderScene={this.renderScene.bind(this)}
+            configureScene={(route) => {
+                if (route.sceneConfig) {
+                    return route.sceneConfig;
+                }
+                return Navigator.SceneConfigs.FloatFromRight;
+            }} />
         );
     }
-    if (routeId === 'MainPage') {
-      return (
-        <MainPage
-            navigator={navigator} />
-      );
-    }
-    if (routeId === 'PersonPage') {
-      return (
-        <PersonPage
-          navigator={navigator} />
-      );
-    }
-    if (routeId === 'NoNavigatorPage') {
-      return (
-        <NoNavigatorPage
-            navigator={navigator} />
-      );
-    }
-    return this.noRoute(navigator);
 
-  }
-  noRoute(navigator) {
-    return (
-      <View style={{flex: 1, alignItems: 'stretch', justifyContent: 'center'}}>
-        <TouchableOpacity style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}
-            onPress={() => navigator.pop()}>
-          <Text style={{color: 'red', fontWeight: 'bold'}}>configure the route for this page in the render scene of index.js</Text>
-        </TouchableOpacity>
-      </View>
-    );
-  }
+    renderScene(route, navigator) {
+        var routeId = route.id;
+        if (routeId === 'SplashPage') {
+            return (
+                <SplashPage navigator={navigator} />);
+        }
+        if (routeId === 'LoginPage') {
+            return (
+                <LoginPage navigator={navigator} />);
+        }
+        if (routeId === 'SignupPage') {
+            navigator.pop()
+            return (
+                <SignupPage navigator={navigator} />);
+        }
+        if (routeId === 'MainPage') {
+            return (
+                <MainPage navigator={navigator} />);
+        }
+        if (routeId === 'PersonPage') {
+            return (
+                <PersonPage navigator={navigator} />);
+        }
+        if (routeId === 'NoNavigatorPage') {
+            return (
+                <NoNavigatorPage navigator={navigator} />
+            );
+        }
+        return this.noRoute(navigator);
+    }
+
+    noRoute(navigator) {
+        return (
+            <View style={{
+                flex: 1, alignItems: 'stretch', justifyContent: 'center'}}>
+                <TouchableOpacity style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}onPress={() => navigator.pop()}>
+                    <Text style={{color: 'red', fontWeight: 'bold'}}>configure the route for this page in the render scene of index.js</Text>
+                </TouchableOpacity>
+            </View>
+        );
+    }
 }
 
 AppRegistry.registerComponent('Youfie', () => Youfie);
