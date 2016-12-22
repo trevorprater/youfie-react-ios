@@ -15,14 +15,21 @@ var {Component} = React;
 const styles = require('../styles.js');
 
 class LoginPage extends Component {
+
   componentWillMount() {
-      this.state = { email: 'email', password: 'password', textHidden: false};
+      this.state = {
+          email: 'email',
+          password: 'password',
+          loggedIn: false,
+          loginmessage: '',
+          textHidden: false};
   }
 
   render() {
     return (
       <Navigator
           renderScene={this.renderScene.bind(this)}
+          firebase={this.props.firebase}
           navigationBar={
             <Navigator.NavigationBar style={styles.navigationBar}
                 routeMapper={NavigationBarRouteMapper} />
@@ -49,7 +56,7 @@ class LoginPage extends Component {
                         onChangeText={(text) => this.setState({email: text})}
                         value={this.state.email}/>
                     <TextInput
-                        style={{backgroundColor: 'rgba(255,255,255,0.6)', borderColor: 'rgba(96,96,96,0.5)', marginBottom: 20, borderWidth: 1,borderStyle: 'dashed',  alignSelf: 'stretch', textAlign: 'center', height: 50,width: 300, color: 'rgba(96,96,96,0.8)'}}
+                        style={{backgroundColor: 'rgba(255,255,255,0.6)', borderColor: 'rgba(96,96,96,0.5)', marginBottom: 5, borderWidth: 1,borderStyle: 'dashed',  alignSelf: 'stretch', textAlign: 'center', height: 50,width: 300, color: 'rgba(96,96,96,0.8)'}}
                         autoCapitalize={'none'}
                         secureTextEntry={this.state.textHidden}
                         autoCorrect={false}
@@ -59,6 +66,7 @@ class LoginPage extends Component {
                         onFocus={() => this.setState({password: '', textHidden: true})}
                         onChangeText={(text) => this.setState({password: text})}
                         value={this.state.password}/>
+            <Text style={{color: 'red', fontSize: 14, marginBottom: 10}}>{this.state.loginMessage}</Text>
                 </View>
                 <View style={{ alignItems: 'center'}}>
                     <TouchableHighlight onPress={this.gotoNext.bind(this)}>
@@ -77,6 +85,46 @@ class LoginPage extends Component {
       </View>
     );
   }
+    _formatErr(errMessage) {
+        var newMsg = errMessage
+            .split(':')
+            .pop()
+            .replace('.','')
+            .toLowerCase()
+            .replace('the', '')
+            .trim()
+        if (newMsg.includes('password is invalid') || newMsg.includes('no user record')) {
+            newMsg = 'incorrect password'
+        }
+        return newMsg
+    }
+
+    async login(email, password) {
+        if (email === '') {
+            this.setState({loginMessage: "enter an email address"})
+            return
+        } if (password === '') {
+            this.setState({loginMessage: "enter a password"})
+            return
+        }
+        try {
+            await this.props.firebase.auth().signInWithEmailAndPassword(email.trim(), password);
+            await this.setState({loggedIn: true})
+        } catch (error) {
+            this.setState({loginMessage: this._formatErr(error.toString())})
+        }
+    }
+
+    async gotoNext() {
+        this.setState({loginMessage: ''})
+        await this.login(this.state.email, this.state.password)
+        if (this.state.loggedIn) {
+            this.props.navigator.push({
+                id: 'MainPage',
+               sceneConfig: Navigator.SceneConfigs.HorizontalSwipeJump
+            });
+        }
+    }
 
     gotoSignup() {
         this.props.navigator.push({
@@ -85,12 +133,6 @@ class LoginPage extends Component {
         });
     }
 
-    gotoNext() {
-        this.props.navigator.push({
-            id: 'MainPage',
-           sceneConfig: Navigator.SceneConfigs.HorizontalSwipeJump
-        });
-    }
 }
 
 var NavigationBarRouteMapper = {

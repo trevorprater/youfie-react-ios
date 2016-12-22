@@ -94,12 +94,12 @@ class Youfie extends Component {
         }
         if (routeId === 'LoginPage') {
             return (
-                <LoginPage navigator={navigator} />);
+                <LoginPage navigator={navigator} firebase={firebase} />);
         }
         if (routeId === 'SignupPage') {
             navigator.pop()
             return (
-                <SignupPage navigator={navigator} />);
+                <SignupPage navigator={navigator} firebase={firebase} />);
         }
         if (routeId === 'MainPage') {
             return (

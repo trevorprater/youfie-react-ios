@@ -23,7 +23,9 @@ class SignupPage extends Component {
         password: 'password',
         confirmPassword: 'confirm password',
         passwordTextHidden: false,
-        confirmPasswordTextHidden: false
+        confirmPasswordTextHidden: false,
+        signupMessage: '',
+        accountCreated: false,
       };
   }
 
@@ -31,7 +33,7 @@ class SignupPage extends Component {
     return (
       <Navigator
           renderScene={this.renderScene.bind(this)}
-          navigator={this.props.navigator}
+          firebase={this.props.firebase}
           navigationBar={
             <Navigator.NavigationBar style={styles.navigationBar}
                 routeMapper={NavigationBarRouteMapper} />
@@ -45,6 +47,7 @@ class SignupPage extends Component {
             <View style={{flex:2, alignItems: 'center', justifyContent: 'center'}}>
                 <Text style={styles.youfieLogo}>youfie</Text>
             </View>
+                <Text style={{color: 'red', fontSize: 14}}>{this.state.signupMessage}</Text>
             <View style={{flex:3, justifyContent: 'flex-start'}}>
                 <View style={{ alignItems: 'center', justifyContent: 'space-between'}}>
 
@@ -92,9 +95,55 @@ class SignupPage extends Component {
       </View>
     );
   }
-  gotoLogin() {
-    this.props.navigator.pop()
-  }
+
+    _formatErr(errMessage) {
+        return errMessage.split(':')
+            .pop()
+            .replace('.', '')
+            .toLowerCase()
+            .replace('the', '')
+            .replace('by another account', '')
+            .trim()
+    }
+
+    async signup(email, password1, password2) {
+        if (email === '') {
+            this.setState({signupMessage: "enter an email address"})
+            return
+        }
+        if (password1 === '') {
+            this.setState({signupMessage: "enter a password"})
+            return
+        }
+        if (password2 === '') {
+            this.setState({signupMessage: "confirm your password"})
+            return
+        }
+            
+        if (password1 !== password2) {
+            this.setState({signupMessage: "passwords do not match"})
+            return
+        }
+
+        try {
+            await this.props.firebase.auth()
+            .createUserWithEmailAndPassword(email.trim(), password1);
+            await this.setState({accountCreated: true})
+        } catch (error) {
+            this.setState({signupMessage: this._formatErr(error.toString())})
+        }
+    }
+
+    async gotoLogin() {
+        this.setState({signupMessage: ''})
+        await this.signup(this.state.email,
+            this.state.password, 
+            this.state.confirmPassword)
+
+        if (this.state.accountCreated) { 
+            this.props.navigator.pop()
+        }
+    }
 }
 
 var NavigationBarRouteMapper = {
