@@ -3,42 +3,85 @@
 var ReactNative = require('react-native');
 var {
   StyleSheet,
-  Component,
   View,
   Text,
+  TextInput,
   Navigator,
   TouchableHighlight,
   TouchableOpacity,
 } = ReactNative;
 var React = require('react');
 var {Component} = React;
+
 const styles = require('../styles.js');
 
-class SignupPage extends Component {
+class LoginPage extends Component {
+  constructor(props) {
+      super(props);
+      this.state = { email: 'email', password: 'password', textHidden: false};
+  }
   render() {
     return (
       <Navigator
           renderScene={this.renderScene.bind(this)}
           navigationBar={
-            <Navigator.NavigationBar style={{styles.navigationBar}}
+            <Navigator.NavigationBar style={styles.navigationBar}
                 routeMapper={NavigationBarRouteMapper} />
           } />
     );
   }
   renderScene(route, navigator) {
     return (
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-        <TouchableHighlight
-            onPress={this.gotoNext.bind(this)}>
-          <Text style={{color: 'red'}}>next</Text>
-        </TouchableHighlight>
+        <View style={{flex: 3, flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-end', backgroundColor: styles.constants.youfieColor}}>
+
+            <View style={{flex:2, alignItems: 'center', justifyContent: 'center'}}>
+                <Text style={styles.youfieLogo}>youfie</Text>
+            </View>
+            <View style={{flex:1, justifyContent: 'flex-start'}}>
+                <View style={{ alignItems: 'center', justifyContent: 'space-between'}}>
+                    <TextInput
+                        style={{borderColor: 'rgba(96,96,96,0.3)', marginBottom: 5, borderWidth: 1,borderStyle: 'dashed',  alignSelf: 'stretch', textAlign: 'center', height: 50,width: 300, color: 'rgba(0,0,0,0.5)'}}
+                        autoCapitalize='none'
+                        autoCorrect={false}
+                        blurOnSubmit={true}
+                        keyboardType={'email-address'}
+                        maxLength={50}
+                        onFocus={() => this.setState({email: ''})}
+                        onChangeText={(text) => this.setState({email: text})}
+                        value={this.state.email}/>
+                    <TextInput
+                        style={{borderColor: 'rgba(96,96,96,0.3)', marginBottom: 20, borderWidth: 1,borderStyle: 'dashed',  alignSelf: 'stretch', textAlign: 'center', height: 50,width: 300, color: 'rgba(0,0,0,0.5)'}}
+                        autoCapitalize={'none'}
+                        secureTextEntry={this.state.textHidden}
+                        autoCorrect={false}
+                        blurOnSubmit={true}
+                        keyboardType={'default'}
+                        maxLength={50}
+                        onFocus={() => this.setState({password: '', textHidden: true})}
+                        onChangeText={(text) => this.setState({password: text})}
+                        value={this.state.password}/>
+                </View>
+                <View style={{ alignItems: 'center'}}>
+                    <TouchableHighlight onPress={this.gotoNext.bind(this)}>
+                        <Text style={{color: 'rgb(255,255,255)', marginBottom: 15, fontSize: 20}}>login</Text>
+                    </TouchableHighlight>
+                </View>
+            </View>
+
+        <View style={{flex: 1, flexDirection: 'row', alignItems: 'flex-start'}}>
+            <Text style={{color: 'rgba(96,96,96,1)', fontSize: 16, marginRight: 6}}>no account?</Text>
+            <TouchableHighlight onPress={this.gotoNext.bind(this)}>
+                <Text style={{color: 'rgb(255,255,255)', fontSize: 16}}>sign up</Text>
+            </TouchableHighlight>
+        </View>
+
       </View>
     );
   }
   gotoNext() {
     this.props.navigator.push({
       id: 'MainPage',
-      name: '主页',
+      name: 'homepage',
     });
   }
 }
@@ -51,14 +94,14 @@ var NavigationBarRouteMapper = {
     return null;
   },
   Title(route, navigator, index, navState) {
-    return (
-      <TouchableOpacity style={{flex: 1, justifyContent: 'center'}}>
-        <Text style={{color: 'white', margin: 10, fontSize: 16}}>
-          sign up
-        </Text>
-      </TouchableOpacity>
-    );
+    return null; //(
+      //<TouchableOpacity style={{flex: 1, justifyContent: 'center'}}>
+       // <Text style={{color: 'white', margin: 10, fontSize: 16}}>
+       //   login
+       // </Text>
+      //</TouchableOpacity>
+    //);
   }
 };
 
-module.exports = SignupPage;
+module.exports = LoginPage;
