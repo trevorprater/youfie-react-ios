@@ -24,15 +24,9 @@ var PersonPage = require('./pages/PersonPage');
 var NoNavigatorPage = require('./pages/NoNavigatorPage');
 
 const styles = require('./styles.js');
-
+const constants = require('./constants.js');
 const firebase = require('firebase');
-const firebaseConfig = {
-    apiKey: "AIzaSyDqk1DhYw2PfDVpU9NPPf5BZrCWHJ2lVIo",
-    authDomain: "youfie-983ce.firebaseapp.com",
-    databaseURL: "https://youfie-983ce.firebaseio.com",
-    storageBucket: "youfie-983ce.appspot.com",
-};
-const firebaseApp = firebase.initializeApp(firebaseConfig)
+const firebaseApp = firebase.initializeApp(constants.firebaseConfig)
 
 class Youfie extends Component {
     constructor(props) {
@@ -94,16 +88,16 @@ class Youfie extends Component {
         }
         if (routeId === 'LoginPage') {
             return (
-                <LoginPage navigator={navigator} firebase={firebase} />);
+                <LoginPage navigator={navigator}/>);
         }
         if (routeId === 'SignupPage') {
             navigator.pop()
             return (
-                <SignupPage navigator={navigator} firebase={firebase} />);
+                <SignupPage navigator={navigator}/>);
         }
         if (routeId === 'MainPage') {
             return (
-                <MainPage navigator={navigator} />);
+                <MainPage navigator={navigator}/>);
         }
         if (routeId === 'PersonPage') {
             return (

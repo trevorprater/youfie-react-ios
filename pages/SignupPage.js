@@ -34,6 +34,7 @@ class SignupPage extends Component {
       <Navigator
           renderScene={this.renderScene.bind(this)}
           firebase={this.props.firebase}
+          navigator={this.props.navigator}
           navigationBar={
             <Navigator.NavigationBar style={styles.navigationBar}
                 routeMapper={NavigationBarRouteMapper} />

@@ -9,10 +9,14 @@ var {
   Navigator,
   TouchableHighlight,
   TouchableOpacity,
+  AsyncStorage,
 } = ReactNative;
 var React = require('react');
 var {Component} = React;
+
 const styles = require('../styles.js');
+const firebase = require('firebase');
+const constants = require('../constants.js');
 
 class LoginPage extends Component {
 
@@ -22,14 +26,28 @@ class LoginPage extends Component {
           password: 'password',
           loggedIn: false,
           loginmessage: '',
-          textHidden: false};
+          textHidden: false
+      };
+    //AsyncStorage.getItem('user_data').then(function(user_data_json){
+    //   let user_data = JSON.parse(user_data_json);
+    //  if (user_data !== null) {
+    //    console.log(user_data.apiKey)
+    //    firebase.auth().signInWithCustomToken(user_data.stsTokenManager.accessToken).then(function(error, authData) {
+     //             if(error) {
+      //                console.log(error)
+       //           } else {
+        //              this.setState({loggedIn: true, user_data: user_data})
+         //         }
+          //    });
+         // }
+    //});
   }
 
   render() {
     return (
       <Navigator
           renderScene={this.renderScene.bind(this)}
-          firebase={this.props.firebase}
+          navigator={this.props.navigator}
           navigationBar={
             <Navigator.NavigationBar style={styles.navigationBar}
                 routeMapper={NavigationBarRouteMapper} />
@@ -108,7 +126,13 @@ class LoginPage extends Component {
             return
         }
         try {
-            await this.props.firebase.auth().signInWithEmailAndPassword(email.trim(), password);
+            await firebase.auth().signInWithEmailAndPassword(email.trim(), password).then(function(user_data, error) {
+                if(error) {
+                    console.log(error)
+                } else {
+                    AsyncStorage.setItem('user_data', JSON.stringify(user_data));
+                }
+            });
             await this.setState({loggedIn: true})
         } catch (error) {
             this.setState({loginMessage: this._formatErr(error.toString())})
