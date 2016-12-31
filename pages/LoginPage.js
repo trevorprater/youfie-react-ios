@@ -7,9 +7,7 @@ var {
   Text,
   TextInput,
   Navigator,
-  TouchableHighlight,
   TouchableOpacity,
-  AsyncStorage,
 } = ReactNative;
 var React = require('react');
 var {Component} = React;
@@ -22,25 +20,12 @@ class LoginPage extends Component {
 
   componentWillMount() {
       this.state = {
-          email: 'email',
-          password: 'password',
+          email: 'trevor.prater@gmail.com',
+          password: 'venice',
           loggedIn: false,
           loginmessage: '',
           textHidden: false
       };
-    //AsyncStorage.getItem('user_data').then(function(user_data_json){
-    //   let user_data = JSON.parse(user_data_json);
-    //  if (user_data !== null) {
-    //    console.log(user_data.apiKey)
-    //    firebase.auth().signInWithCustomToken(user_data.stsTokenManager.accessToken).then(function(error, authData) {
-     //             if(error) {
-      //                console.log(error)
-       //           } else {
-        //              this.setState({loggedIn: true, user_data: user_data})
-         //         }
-          //    });
-         // }
-    //});
   }
 
   render() {
@@ -48,10 +33,7 @@ class LoginPage extends Component {
       <Navigator
           renderScene={this.renderScene.bind(this)}
           navigator={this.props.navigator}
-          navigationBar={
-            <Navigator.NavigationBar style={styles.navigationBar}
-                routeMapper={NavigationBarRouteMapper} />
-          } />
+      />
     );
   }
   renderScene(route, navigator) {
@@ -87,17 +69,17 @@ class LoginPage extends Component {
             <Text style={{color: 'red', fontSize: 14, marginBottom: 10}}>{this.state.loginMessage}</Text>
                 </View>
                 <View style={{ alignItems: 'center'}}>
-                    <TouchableHighlight onPress={this.gotoNext.bind(this)}>
+                    <TouchableOpacity onPress={this.gotoNext.bind(this)}>
                         <Text style={{color: 'rgb(255,255,255)', marginBottom: 15, fontSize: 20}}>login</Text>
-                    </TouchableHighlight>
+                    </TouchableOpacity>
                 </View>
             </View>
 
         <View style={{flex: 1, flexDirection: 'row', alignItems: 'flex-start'}}>
             <Text style={{color: 'rgba(96,96,96,1)', fontSize: 19, marginRight: 6}}>no account?</Text>
-            <TouchableHighlight onPress={this.gotoSignup.bind(this)}>
+            <TouchableOpacity onPress={this.gotoSignup.bind(this)}>
                 <Text style={{color: 'rgb(255,255,255)', fontSize: 19}}>sign up</Text>
-            </TouchableHighlight>
+            </TouchableOpacity>
         </View>
 
       </View>
@@ -130,7 +112,7 @@ class LoginPage extends Component {
                 if(error) {
                     console.log(error)
                 } else {
-                    AsyncStorage.setItem('user_data', JSON.stringify(user_data));
+                    //AsyncStorage.setItem('user_data', JSON.stringify(user_data));
                 }
             });
             await this.setState({loggedIn: true})
@@ -158,17 +140,5 @@ class LoginPage extends Component {
     }
 
 }
-
-var NavigationBarRouteMapper = {
-  LeftButton(route, navigator, index, navState) {
-    return null;
-  },
-  RightButton(route, navigator, index, navState) {
-    return null;
-  },
-  Title(route, navigator, index, navState) {
-    return null;
-  }
-};
 
 module.exports = LoginPage;

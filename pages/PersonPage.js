@@ -2,11 +2,12 @@
 
 var ReactNative = require('react-native');
 var {
-  StyleSheet,
-  View,
-  Text,
-  Navigator,
-  TouchableOpacity,
+    StyleSheet,
+    View,
+    Text,
+    Image,
+    Navigator,
+    TouchableOpacity,
 } = ReactNative;
 var React = require('react');
 var {Component} = React;
@@ -19,14 +20,14 @@ class PersonPage extends Component {
           renderScene={this.renderScene.bind(this)}
           navigator={this.props.navigator}
           navigationBar={
-            <Navigator.NavigationBar style={styles.navigationBar}
+            <Navigator.NavigationBar style={styles.navigationBarClear}
                 routeMapper={NavigationBarRouteMapper} />
           } />
     );
   }
   renderScene(route, navigator) {
     return (
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: styles.constants.youfieColor}}>
         <TouchableOpacity
             onPress={this.gotoNext.bind(this)}>
           <Text>personal home page</Text>
@@ -47,9 +48,10 @@ var NavigationBarRouteMapper = {
     return (
       <TouchableOpacity style={{flex: 1, justifyContent: 'center'}}
           onPress={() => navigator.parentNavigator.pop()}>
-        <Text style={{color: 'white', margin: 10,}}>
-          goback 
-        </Text>
+        <Image
+            source={require('../assets/backarrow-youfie-logo.png')}
+            style={{width:20, height:20, marginLeft: 10, marginTop: 3}}
+        />
       </TouchableOpacity>
     );
   },
@@ -57,8 +59,7 @@ var NavigationBarRouteMapper = {
     return (
       <TouchableOpacity style={{flex: 1, justifyContent: 'center'}}
           onPress={() => navigator.parentNavigator.push({id: 'unknown'})}>
-        <Text style={{color: 'white', margin: 10,}}>
-          test your luck
+        <Text style={styles.navigationBarText}>
         </Text>
       </TouchableOpacity>
     );
@@ -66,8 +67,7 @@ var NavigationBarRouteMapper = {
   Title(route, navigator, index, nextState) {
     return (
       <TouchableOpacity style={{flex: 1, justifyContent: 'center'}}>
-        <Text style={{color: 'white', margin: 10, fontSize: 16}}>
-        homepage
+        <Text style={styles.navigationBarText}>
         </Text>
       </TouchableOpacity>
     );

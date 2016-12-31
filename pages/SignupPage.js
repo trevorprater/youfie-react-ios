@@ -36,7 +36,7 @@ class SignupPage extends Component {
           firebase={this.props.firebase}
           navigator={this.props.navigator}
           navigationBar={
-            <Navigator.NavigationBar style={styles.navigationBar}
+            <Navigator.NavigationBar style={styles.navigationBarClear}
                 routeMapper={NavigationBarRouteMapper} />
           } />
     );
@@ -154,7 +154,7 @@ var NavigationBarRouteMapper = {
             onPress={() => navigator.parentNavigator.pop()}>
               <Image
                 source={require('../assets/backarrow-youfie-logo.png')}
-                style={{width: 20, height: 20, marginLeft: 10, marginTop: 3}}
+                style={styles.signupBarIcon}
               />
           </TouchableOpacity>
       )
