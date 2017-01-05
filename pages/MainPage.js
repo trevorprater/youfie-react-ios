@@ -73,8 +73,6 @@ class MainPage extends Component {
         }
     }
 
-
-
     gotoPersonPage() {
         this.props.navigator.push({
             id: 'PersonPage',
