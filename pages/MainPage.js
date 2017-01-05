@@ -14,11 +14,6 @@ const styles = require('../styles.js')
 import Camera from 'react-native-camera'
 
 class MainPage extends Component {
-  //constructor(props) {
-  //    console.log('executing consturctor')
-  //    super(props);
-  //    this.state = {cameraType: 'back'};
-  //}
   componentWillMount() {
       this.state = {cameraType: 'back'};
   }
@@ -36,7 +31,6 @@ class MainPage extends Component {
     );
   }
   renderScene(route, navigator) {
-      console.log('rendering scene...')
       return (
       <View style={cameraStyles.container}>
         <Camera
@@ -46,20 +40,22 @@ class MainPage extends Component {
 
           style={cameraStyles.preview}
           aspect={Camera.constants.Aspect.stretch}
-          type={this.state.cameraType}>
-          <Text
+          type={this.state.cameraType}
+          defaultOnFocusComponent={true}
+        >
+        <Text
             style={cameraStyles.capture}
             onPress={this.takePicture.bind(this)}>youfie
-          </Text>
-          <TouchableOpacity style={{flex: 0, justifyContent: 'flex-end'}}
-              onPress={this.rotateCamera.bind(this)}>
+        </Text>
+        <TouchableOpacity style={{flex: 0, justifyContent: 'flex-end'}}
+          onPress={this.rotateCamera.bind(this)}>
             <Image
-                source={require('../assets/reverse-camera-youfie-icon2.png')}
-                style={cameraStyles.type}
+               source={require('../assets/reverse-camera-youfie-icon2.png')}
+               style={cameraStyles.type}
             />
-          </TouchableOpacity>
-        </Camera>
-      </View>
+        </TouchableOpacity>
+      </Camera>
+    </View>
       );}
 
     takePicture() {
@@ -75,9 +71,6 @@ class MainPage extends Component {
         } else {
             this.setState({cameraType: 'front'});
         }
-        console.log('using' + this.state.cameraType +  'camera');
-        console.log('rotating camera')
-        //this.render()
     }
 
 
