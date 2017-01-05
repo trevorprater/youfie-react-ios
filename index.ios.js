@@ -20,13 +20,14 @@ var SplashPage = require('./pages/SplashPage');
 var LoginPage = require('./pages/LoginPage');
 var SignupPage = require('./pages/SignupPage');
 var MainPage = require('./pages/MainPage');
-var PersonPage = require('./pages/PersonPage');
+var PhotoPage = require('./pages/PhotoPage');
 var NoNavigatorPage = require('./pages/NoNavigatorPage');
 
 const styles = require('./styles.js');
 const constants = require('./constants.js');
 const firebase = require('firebase');
 const firebaseApp = firebase.initializeApp(constants.firebaseConfig)
+
 
 class Youfie extends Component {
     constructor(props) {
@@ -82,6 +83,7 @@ class Youfie extends Component {
 
     renderScene(route, navigator) {
         var routeId = route.id;
+
         if (routeId === 'SplashPage') {
             return (
                 <SplashPage navigator={navigator} />);
@@ -99,9 +101,9 @@ class Youfie extends Component {
             return (
                 <MainPage navigator={navigator}/>);
         }
-        if (routeId === 'PersonPage') {
+        if (routeId === 'PhotoPage') {
             return (
-                <PersonPage navigator={navigator} />);
+                <PhotoPage navigator={navigator} imgData={route.imgData} />);
         }
         if (routeId === 'NoNavigatorPage') {
             return (

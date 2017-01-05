@@ -38,8 +38,9 @@ class MainPage extends Component {
             this.camera = cam;
           }}
 
-          style={cameraStyles.preview}
           aspect={Camera.constants.Aspect.stretch}
+          captureTarget={Camera.constants.CaptureTarget.memory}
+          style={cameraStyles.preview}
           type={this.state.cameraType}
           defaultOnFocusComponent={true}
         >
@@ -59,10 +60,10 @@ class MainPage extends Component {
       );}
 
     takePicture() {
-        this.camera.capture().then((data) => 
-            console.log(data)).catch(err =>
+        this.camera.capture().then((data) => {
+            this.gotoPhotoPage(data['data']);
+        }).catch(err =>
                 console.error(err));
-        this.gotoPersonPage()
     }
 
     rotateCamera() {
@@ -73,10 +74,11 @@ class MainPage extends Component {
         }
     }
 
-    gotoPersonPage() {
+    gotoPhotoPage(imgData) {
         this.props.navigator.push({
-            id: 'PersonPage',
-            name: 'person page',
+            id: 'PhotoPage',
+            name: 'photo page',
+            imgData: imgData,
         });
     }
 }
