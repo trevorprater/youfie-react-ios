@@ -16,7 +16,6 @@ import ReactNative, {
     TouchableOpacity
 } from 'react-native';
 
-var SplashPage = require('./pages/SplashPage');
 var LoginPage = require('./pages/LoginPage');
 var SignupPage = require('./pages/SignupPage');
 var CameraPage = require('./pages/CameraPage');
@@ -73,7 +72,7 @@ class Youfie extends Component {
     render() {
         return (
             <Navigator
-            initialRoute={{id: 'SplashPage', name: 'Index'}}
+            initialRoute={{id: 'LoginPage', name: 'Index'}}
             renderScene={this.renderScene.bind(this)}
             configureScene={(route) => {
                 if (route.sceneConfig) {
@@ -87,10 +86,6 @@ class Youfie extends Component {
     renderScene(route, navigator) {
         var routeId = route.id;
 
-        if (routeId === 'SplashPage') {
-            return (
-                <SplashPage navigator={navigator} firebaseApp={firebaseApp}/>);
-        }
         if (routeId === 'LoginPage') {
             return (
                 <LoginPage navigator={navigator} firebaseApp={firebaseApp}/>);
