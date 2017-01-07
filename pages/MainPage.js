@@ -13,7 +13,7 @@ var {Component} = React;
 const styles = require('../styles.js')
 import Camera from 'react-native-camera'
 
-class MainPage extends Component {
+class CameraPage extends Component {
   componentWillMount() {
       this.state = {cameraType: 'back'};
   }
@@ -21,7 +21,6 @@ class MainPage extends Component {
     return (
       <Navigator
           renderScene={this.renderScene.bind(this)}
-          firebase={this.props.firebase}
           navigator={this.props.navigator}
           navigationBar={
             <Navigator.NavigationBar style={styles.navigationBarClear}
@@ -146,4 +145,4 @@ const cameraStyles = StyleSheet.create({
   },
 });
 
-module.exports = MainPage;
+module.exports = CameraPage;

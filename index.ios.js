@@ -19,7 +19,7 @@ import ReactNative, {
 var SplashPage = require('./pages/SplashPage');
 var LoginPage = require('./pages/LoginPage');
 var SignupPage = require('./pages/SignupPage');
-var MainPage = require('./pages/MainPage');
+var CameraPage = require('./pages/CameraPage');
 var PhotoPage = require('./pages/PhotoPage');
 var NoNavigatorPage = require('./pages/NoNavigatorPage');
 
@@ -86,28 +86,28 @@ class Youfie extends Component {
 
         if (routeId === 'SplashPage') {
             return (
-                <SplashPage navigator={navigator}/>);
+                <SplashPage navigator={navigator} firebaseApp={firebaseApp}/>);
         }
         if (routeId === 'LoginPage') {
             return (
-                <LoginPage navigator={navigator}/>);
+                <LoginPage navigator={navigator} firebaseApp={firebaseApp}/>);
         }
         if (routeId === 'SignupPage') {
             navigator.pop()
             return (
-                <SignupPage navigator={navigator}/>);
+                <SignupPage navigator={navigator} firebaseApp={firebaseApp}/>);
         }
-        if (routeId === 'MainPage') {
+        if (routeId === 'CameraPage') {
             return (
-                <MainPage navigator={navigator}/>);
+                <CameraPage navigator={navigator} firebaseApp={firebaseApp}/>);
         }
         if (routeId === 'PhotoPage') {
             return (
-                <PhotoPage navigator={navigator} imgData={route.imgData} />);
+                <PhotoPage navigator={navigator} imgData={route.imgData} firebaseApp={firebaseApp} />);
         }
         if (routeId === 'NoNavigatorPage') {
             return (
-                <NoNavigatorPage navigator={navigator} />
+                <NoNavigatorPage navigator={navigator} firebaseApp={firebaseApp}/>
             );
         }
         return this.noRoute(navigator);
