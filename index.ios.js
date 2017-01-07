@@ -86,7 +86,7 @@ class Youfie extends Component {
 
         if (routeId === 'SplashPage') {
             return (
-                <SplashPage navigator={navigator} />);
+                <SplashPage navigator={navigator}/>);
         }
         if (routeId === 'LoginPage') {
             return (
