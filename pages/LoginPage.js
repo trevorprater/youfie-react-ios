@@ -126,7 +126,7 @@ class LoginPage extends Component {
         await this.login(this.state.email, this.state.password)
         if (this.state.loggedIn) {
             this.props.navigator.push({
-                id: 'MainPage',
+                id: 'CameraPage',
                sceneConfig: Navigator.SceneConfigs.HorizontalSwipeJump
             });
         }
