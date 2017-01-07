@@ -12,14 +12,37 @@ var {
 var React = require('react');
 var {Component} = React;
 const styles = require('../styles.js')
+const uuidV4 = require('uuid/v4')
+import RNFetchBlob from 'react-native-fetch-blob'
+const fs = RNFetchBlob.fs
+const Blob = RNFetchBlob.polyfill.Blob
+window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest
+window.Blob = Blob
 
 class PhotoPage extends Component {
     componentWillMount() {
+        this.imgPrefix = 'data:image/png;base64,';
+        this.imgGUID = uuidV4();
+        this.imgFilename = this.imgGUID + '.png';
+        this.imgRef = this.props.imagesRef.child(this.imgFilename);
         this.uploadPhoto();
     }
 
     uploadPhoto() {
-
+        let rnfbURI = RNFetchBlob.wrap(this.props.imgPath);
+        this.rnfbURI = rnfbURI;
+        Blob.build(rnfbURI, { type: 'image/png;'})
+        .then((blob) => {
+            this.imgRef.put(blob, { contentType: 'image/png' }).then(
+                function(snapshot) {
+                    console.log('image uploaded!');
+                },
+                function(error) {
+                    console.error(error);
+                })
+        }).catch((err) => {
+            console.error(err)
+        });
     }
 
     render() {
@@ -38,7 +61,7 @@ class PhotoPage extends Component {
     renderScene(route, navigator) {
         return (
             <View style={{flex: 1, backgroundColor: styles.constants.youfieColor}}>
-                <Image source={{uri: 'data:image/png;base64,' + this.props.imgData}} style={{flex: 1, resizeMode: 'cover'}} />
+                <Image source={{uri: 'data:image/png;base64,' + this.props.imgB64}} style={{flex: 1, resizeMode: 'cover'}} />
             </View>
         );
     }

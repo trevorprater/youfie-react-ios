@@ -13,7 +13,6 @@ var React = require('react');
 var {Component} = React;
 
 const styles = require('../styles.js');
-const firebase = require('firebase');
 const constants = require('../constants.js');
 
 class LoginPage extends Component {
@@ -108,7 +107,7 @@ class LoginPage extends Component {
             return
         }
         try {
-            await firebase.auth().signInWithEmailAndPassword(email.trim(), password).then(function(user_data, error) {
+            await this.props.firebaseApp.auth().signInWithEmailAndPassword(email.trim(), password).then(function(user_data, error) {
                 if(error) {
                     console.log(error)
                 } else {

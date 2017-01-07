@@ -12,6 +12,11 @@ var React = require('react');
 var {Component} = React;
 const styles = require('../styles.js')
 import Camera from 'react-native-camera'
+import RNFetchBlob from 'react-native-fetch-blob'
+const fs = RNFetchBlob.fs
+const Blob = RNFetchBlob.polyfill.Blob
+window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest
+window.Blob = Blob
 
 class CameraPage extends Component {
   componentWillMount() {
@@ -38,7 +43,7 @@ class CameraPage extends Component {
           }}
 
           aspect={Camera.constants.Aspect.stretch}
-          captureTarget={Camera.constants.CaptureTarget.memory}
+          captureTarget={Camera.constants.CaptureTarget.disk}
           style={cameraStyles.preview}
           type={this.state.cameraType}
           defaultOnFocusComponent={true}
@@ -59,10 +64,15 @@ class CameraPage extends Component {
       );}
 
     takePicture() {
-        this.camera.capture().then((data) => {
-            this.gotoPhotoPage(data['data']);
+        this.camera.capture().then((imgPath) => {
+            imgPath = imgPath['path'].replace('file://','');
+			RNFetchBlob.fs.readFile(imgPath, 'base64').then((imgB64) => { 
+				this.gotoPhotoPage(imgPath, imgB64);
+			})  
+            //this.gotoPhotoPage(path);
         }).catch(err =>
-                console.error(err));
+            console.error(err)
+		);
     }
 
     rotateCamera() {
@@ -73,11 +83,12 @@ class CameraPage extends Component {
         }
     }
 
-    gotoPhotoPage(imgData) {
+    gotoPhotoPage(imgPath, imgB64) {
         this.props.navigator.push({
             id: 'PhotoPage',
             name: 'photo page',
-            imgData: imgData,
+            imgPath: imgPath,
+			imgB64: imgB64,
         });
     }
 }

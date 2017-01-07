@@ -27,6 +27,9 @@ const styles = require('./styles.js');
 const constants = require('./constants.js');
 const firebase = require('firebase');
 const firebaseApp = firebase.initializeApp(constants.firebaseConfig)
+const storage = firebase.storage();
+const storageRef = storage.ref();
+const imagesRef = storageRef.child('images');
 
 
 class Youfie extends Component {
@@ -103,7 +106,7 @@ class Youfie extends Component {
         }
         if (routeId === 'PhotoPage') {
             return (
-                <PhotoPage navigator={navigator} imgData={route.imgData} firebaseApp={firebaseApp} />);
+                <PhotoPage navigator={navigator} firebaseApp={firebaseApp} imagesRef={imagesRef} imgPath={route.imgPath} imgB64={route.imgB64}/>);
         }
         if (routeId === 'NoNavigatorPage') {
             return (
