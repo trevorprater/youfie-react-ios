@@ -55,8 +55,8 @@
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 	<key>NSCameraUsageDescription</key>
-	<string>Your message to user when the camera is accesseded for the first time</string>
+	<string>Youfie requires access to your camera in order to function properly.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Yo, we need access to your camera roll!</string>
+	<string>Youfie requires access to your camera roll in order to function properly.</string>
 </dict>
 </plist>
