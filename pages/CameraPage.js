@@ -57,7 +57,7 @@ class CameraPage extends Component {
         >
       </Camera>
       <View style={{zIndex: 1, position: 'absolute', height: this.state.faceHeight, width: this.state.faceWidth, marginTop: this.state.faceY, marginLeft: this.state.faceX, borderWidth: this.state.faceBoxWidth, borderColor:  styles.constants.youfieColor, borderStyle: 'dashed'}}/>
-        <View style={{zIndex: 2, alignItems: 'center', flexDirection: 'row', backgroundColor: 'black', padding: 10, borderTopWidth: 4, borderTopColor: 'gray'}}>
+        <View style={{zIndex: 2, alignItems: 'center', flexDirection: 'row', backgroundColor: 'black', padding: 10, borderTopWidth: 4, borderTopColor: 'rgba(96,96,96,1)'}}>
         <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center'}}>
           <TouchableOpacity
             onPress={this.switchFlash.bind(this)}>
@@ -96,14 +96,18 @@ class CameraPage extends Component {
                 faceBoxWidth: 2
             })
         } else {
-            this.setState({
-                faceHeight: 0,
-                faceWidth: 0,
-                faceX: 0,
-                faceY: 0,
-                faceBoxWidth: 0
-        })
+            this.resetBoundingBox()
         }
+    }
+
+    resetBoundingBox() {
+        this.setState({
+            faceHeight: 0,
+            faceWidth: 0,
+            faceX: 0,
+            faceY: 0,
+            faceBoxWidth: 0,
+        });
     }
 
     takePicture() {
@@ -118,6 +122,7 @@ class CameraPage extends Component {
     }
 
     rotateCamera() {
+        this.resetBoundingBox();
         if (this.state.cameraType === 'front') {
             this.setState({cameraType: 'back', faceWidth: 0, faceHeight: 0});
         } else {
